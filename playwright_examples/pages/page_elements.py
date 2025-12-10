@@ -1,20 +1,18 @@
 from playwright.sync_api import Page
 
 
-class PageMainDemoQA:
+class PageElements:
     def __init__(self, page: Page):
         self.page = page
         self.url = 'https://demoqa.com/elements'
-        self.home_banner = page.locator('.home-banner')
-        self.elements = page.get_by_text('Elements')
-        self.forms = page.get_by_text('Forms')
-        self.alerts_frame_windows = page.get_by_text('Alerts, Frame & Windows')
-        self.widgets = page.get_by_text('Widgets')
-        self.interactions = page.get_by_text('Interactions')
-        self.store = page.get_by_text('Store')
+        self.group = '//div[.="{}"]//ancestor::div[@class="element-group"]'
 
     def open(self) -> None:
-        self.page.goto(self.url)
+        if not self.page.url == self.url:
+            self.page.goto(self.url)
 
     def is_loaded(self) -> bool:
-        return self.home_banner.is_visible()
+        return self.page.is_visible(self.group.format('Elements'))
+
+    def navigate_to_group(self, group_name: str) -> None:
+        self.page.locator(self.group.format(group_name)).click()

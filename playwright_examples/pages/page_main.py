@@ -1,7 +1,7 @@
 from playwright.sync_api import Page
 
 
-class PageMainDemoQA:
+class PageMain:
     def __init__(self, page: Page):
         self.page = page
         self.url = 'https://demoqa.com'
